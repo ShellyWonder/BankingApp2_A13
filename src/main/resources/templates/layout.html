@@ -36,7 +36,7 @@
       crossorigin="anonymous"
     />
     <!--Custom CSS-->
-    <link rel="stylesheet" th:href="@{/css/site.css}" />
+    <link rel="stylesheet" th:href="@{/resources/static/css/site.css}"> 
   </head>
 
   <body class="d-flex flex-column h-100">
@@ -45,10 +45,11 @@
         <div class="container-fluid">
           <a class="navbar-brand logoFont" th:href="@{/}"
             ><img
-              src="img/logoMarkWhite.png"
+              src="/img/logoMarkWhite.png"
               class="mt-1"
               width="40"
               height="49"
+              
             />
             Java Coders Community Bank</a
           >
@@ -73,46 +74,24 @@
                   >Home</a
                 >
               </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  th:href="@{/register}"
+                  th:classappend="${activePage == 'register' ? 'active' : ''}"
+                  >Register</a
+                >
+              </li>
 
               <li class="nav-item">
                 <a
                   class="nav-link"
-                  th:href="@{/transactions}"
-                  th:classappend="${activePage == 'transactions' ? 'active' : ''}"
-                  >Transactions</a
+                  th:href="@{/users}"
+                  th:classappend="${activePage == 'users' ? 'active' : ''}"
+                  >Users</a
                 >
               </li>
-              <li class="nav-item dropdown">
-                <a
-                  class="nav-link dropdown-toggle"
-                  href="#"
-                  id="navbarDropdown"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                  >The Code</a
-                >
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li class="code-view">
-                    <a class="dropdown-item" th:href="@{/controller_code}"
-                      >Controller Code</a
-                    >
-                  </li>
-                  <hr />
-                  <li>
-                    <a class="dropdown-item" th:href="@{/service_code}"
-                      >Service Code</a
-                    >
-                  </li>
-                  <hr />
-                  <li>
-                    <a class="dropdown-item" th:href="@{/repository_code}"
-                      >Repository Code</a
-                    >
-                  </li>
-                </ul>
-              </li>
-
+              
               <li class="nav-item">
                 <a
                   class="nav-link"
