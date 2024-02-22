@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://thymeleaf.org" lang="en">
-  <head th:fragment="common-head(title)">
+  <head th:fragment="common-head">
+
+    <title th:fragment="title">Java Coders Community Bank</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title th:text="${title} ?: 'Java Coders Community Bank'"></title>
+    
     <!--SEO-->
     <meta
       name="description"
@@ -20,7 +22,7 @@
 
    
     <!--Favicon-->
-    <link rel="icon" type="img/png" href="/img/favicon/favicon-32x32.png" />
+    <link rel="icon" type="img/png" th:href="@{/img/favicon/favicon-32x32.png}" />
     <!--ADOBE FONTS -->
     <link rel="stylesheet" href="https://use.typekit.net/liw5mjc.css" />
     <!--Bootstrap Icons-->
@@ -36,7 +38,7 @@
       crossorigin="anonymous"
     />
     <!--Custom CSS-->
-    <link rel="stylesheet" th:href="@{/resources/static/css/site.css}"> 
+    <link rel="stylesheet" th:href="@{/css/site.css}"> 
   </head>
 
   <body class="d-flex flex-column h-100">

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://thymeleaf.org">
-  <head th:replace="layout :: common-head(~{::title})">
-    JCCB: Transactions
+<html xmlns:th="http://thymeleaf.org" lang="en">
+  <head th:replace="layout :: common-head">
+    <title>Users</title>
   </head>
   <body class="d-flex flex-column h-100">
     <header th:replace="layout :: header"></header>
@@ -10,7 +10,7 @@
         <div class="row mt-5">
           <div class="col-md-12">
             <div class="d-flex justify-content-between align-items-center pt-5">
-              <h1 class="text-center">Transaction History</h1>
+              <h1 class="text-center">Users</h1>
               <button
                 onclick="function printPage() { window.print(); }; printPage();"
                 class="btn print-btn me-3"
@@ -19,103 +19,51 @@
               </button>
             </div>
           </div>
+          <div th:if="${not #lists.isEmpty(users)}">
           <div class="col-md-12">
             <div class="table-responsive">
               <table class="table table-striped table-hover table-success my-3">
                 <thead>
                   <tr>
                     <th class="custom-table" scope="col">ID</th>
-                    <th class="custom-table" scope="col">Date</th>
-                    <th class="custom-table" scope="col">Retailer</th>
-                    <th class="custom-table" scope="col">Description</th>
-                    <th class="custom-table" scope="col">Type</th>
-                    <th class="custom-table" scope="col">Amount</th>
-                  </tr>
+                    <th class="custom-table" scope="col">User Name</th>
+                    <th class="custom-table" scope="col">Password</th>
+                    <th class="custom-table" scope="col">Full Name</th>
+                    </tr>
                 </thead>
                 <tbody>
-                  <tr th:each="transaction : ${transactions}">
+                  <tr th:each="user : ${users}">
                     <td>
-                      <a
-                        type="button"
-                        class="btn btn-primary w-100"
-                        th:href="@{/transaction_details/{id}(id=${transaction.id})}"
-                        th:text="${transaction.id}"
-                      ></a>
+                      <a class="btn btn-primary w-100" th:href="@{/user_details/{id}(id=${user.userId})}" th:text="${user.userId}"></a>
+
                     </td>
 
                     <td>
                       <span
-                        th:text="${#temporals.format(transaction.date, 'dd MMMM yyyy, HH:mm')}"
+                        th:text="${user.username}"
+                        
                       ></span>
                     </td>
 
-                    <td><span th:text="${transaction.retailer}"></span></td>
-                    <td><span th:text="${transaction.description}"></span></td>
-                    <td>
-                      <span
-                        th:classappend="${transaction.type == 'C'} ? 'credit-green' : 'debit-red'"
-                        th:text="${transaction.type}"
-                      ></span>
-                    </td>
-                    <td>
-                      <span
-                        th:classappend="${transaction.type == 'C'} ? 'credit-green' : 'debit-red'"
-                        th:text="${transaction.type == 'C'} ? '+' + ${transaction.amount} : '-' + ${transaction.amount}"
-                      ></span>
-                    </td>
-                  </tr>
+                    <td><span th:text="${user.password}"></span></td>
+                    <td><span th:text="${user.name}"></span></td>
+                    </tr>
                 </tbody>
               </table>
             </div>
           </div>
-          <!-- Pagination -->
-          <nav aria-label="Page navigation">
-            <ul class="pagination justify-content-center pt-3">
-              <!-- Previous Page Link -->
-              <li
-                class="page-item border border-success"
-                th:classappend="${currentPage == 0 ? 'disabled' : ''}"
-              >
-                <a
-                  class="page-link bg-success-subtle"
-                  th:href="@{/transactions(page=${currentPage - 1}, size=${size})}"
-                  >Previous</a
-                >
-              </li>
-              <!-- Page Number Links -->
-              <li
-                th:each="pageNum : ${#numbers.sequence(0, totalPages - 1)}"
-                class="page-item border border-success"
-                th:classappend="${pageNum == currentPage ? 'active' : ''}"
-              >
-                <a
-                  class="page-link"
-                  th:href="@{/transactions(page=${pageNum}, size=${size})}"
-                  th:text="${pageNum + 1}"
-                ></a>
-              </li>
-              <!-- Next Page Link -->
-              <li
-                class="page-item border border-success"
-                th:classappend="${currentPage + 1 >= totalPages ? 'disabled' : ''}"
-              >
-                <a
-                  class="page-link bg-success-subtle"
-                  th:href="@{/transactions(page=${currentPage + 1}, size=${size})}"
-                  >Next</a
-                >
-              </li>
-            </ul>
-          </nav>
+          <!-- Display this div only if users list is empty -->
+          <div th:if="${#lists.isEmpty(users)}" class="col-md-12 text-center">
+            No users to display
+          </div>
+          
           <p class="text-center">
-            <strong class="debit-red">Warning:</strong> Sample Data for Demo
+            <strong>Warning:</strong> Sample Data for Demo
             Purposes Only.
           </p>
         </div>
       </div>
     </main>
     <footer th:replace="layout :: footer"></footer>
-    <!-- <div th:replace="layout :: CustomJS"></div> -->
-    <div th:replace="layout :: BootstrapJS"></div>
   </body>
 </html>

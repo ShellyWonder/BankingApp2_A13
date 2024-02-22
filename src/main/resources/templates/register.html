@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://thymeleaf.org" lang="en">
-  <head th:replace="layout :: common-head(~{::title})">
-    <title>Register</title>
+  <head>
+  <div th:replace="layout :: common-head"></div>
+    <th:block th:with="title='Register'">
+    <title th:text="${title}">JCCB: Register</title> 
+  </th:block>
   </head>
   <body class="d-flex flex-column h-100">
     <header th:replace="layout :: header"></header>
@@ -10,7 +13,7 @@
         <div class="row mt-5">
           <div class="col-12 pt-3">
             <h1 class="text-center my-5">Create Your Account</h1>
-            <form class="row g-3" action="" method="post">
+            <form class="row g-3" action="" th:action="@{/register}" method="POST">
               <div class="col-12 mb-3">
                 <label for="username" class="form-label" aria label="username"
                   >Username</label
@@ -42,15 +45,7 @@
                   th:field="${user.name}"
                 />
               </div>
-              <!-- <div class="col-12 mb-3">
-                <label for="amount" class="form-label">Amount</label>
-                <input
-                  type="number"
-                  class="form-control"
-                  step="0.01"
-                  th:field="*{amount}"
-                />
-              </div> -->
+              
 
               <div class="col d-flex justify-content-end mb-3">
                 <input
