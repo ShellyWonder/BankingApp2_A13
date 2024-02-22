@@ -13,7 +13,7 @@ public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
   registry.addResourceHandler("/resources/static/**") 
     .addResourceLocations("/resources/static/");
-
+    
 } 
 
 
