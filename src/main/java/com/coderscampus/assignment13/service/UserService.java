@@ -50,6 +50,13 @@ public class UserService {
 		return userOpt.orElse(new User());
 	}
 
+	public User updateUserAndAddress(User updatedUser) {
+		// Updates to both user details and address
+		// Because of CascadeType.ALL, saving the user will automatically save address changes as well
+		return userRepo.save(updatedUser);
+	}
+	
+
 	public User saveUser(User user) {
 		if (user.getUserId() == null) {
 			Account checking = new Account();
