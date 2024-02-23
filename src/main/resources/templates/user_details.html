@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head th:replace="layout :: common-head(~{::title})">
-    JCCB: Transaction Details
-  </head>
+  <head>
+    <div th:replace="layout :: common-head">
+      <th:block th:with="title='User Details'">
+      <title th:text="${title}">JCCB: User Details</title> 
+    </th:block>
+  </div>
+    </head>
   <body class="d-flex flex-column h-100">
     <header th:replace="layout :: header"></header>
 
@@ -11,7 +15,7 @@
         <div class="row mt-5">
           <div class="col-md-12 pt-3">
             <div class="d-flex justify-content-between align-items-center pt-5">
-              <h1 class="text-center">Transaction Details</h1>
+              <h1 class="text-center">User Details</h1>
               <button
                 onclick="function printPage() { window.print(); }; printPage();"
                 class="btn print-btn"
@@ -29,8 +33,8 @@
                   <li class="nav-item">
                     <a
                       class="nav-link"
-                      th:href="@{/update_user/{id}(id=${user.UserId})}"
-                      ><i class="bi bi-pencil"></i>Update User</a
+                      th:href="@{/update_user/{id}(id=${user.userId})}"
+                      ><i class="bi bi-pencil"></i>Add Address/Update User</a
                     >
                   </li>
                   <li class="nav-item">
@@ -84,7 +88,7 @@
                   </div>
                   <div
                     class="col-md-4 d-flex justify-content-start card-text"
-                    th:text="${user.fullname}"
+                    th:text="${user.name}"
                   ></div>
                 </div>
 
@@ -97,6 +101,50 @@
                 </div>
               </div>
             </div>
+            <div th:if="${showUpdateForm}">
+              <form th:action="@{'/user_details/' + ${user.userId} + '/update'}" th:object="${user}" method="post">
+                  <div class="mb-3">
+                      <label for="username" class="form-label">Username</label>
+                      <input type="text" id="username" th:field="*{username}" class="form-control" readonly/>
+                  </div>
+                  <div class="mb-3">
+                      <label for="password" class="form-label">Password</label>
+                      <input type="password" id="password" th:field="*{password}" class="form-control"/>
+                  </div>
+                  <div class="mb-3">
+                      <label for="name" class="form-label">Name</label>
+                      <input type="text" id="name" th:field="*{name}" class="form-control"/>
+                  </div>
+                  <!-- Address fields -->
+                  <div class="mb-3">
+                      <label for="addressLine1" class="form-label">Address Line 1</label>
+                      <input type="text" id="addressLine1" th:field="*{address.addressLine1}" class="form-control"/>
+                  </div>
+                 
+                  <div class="mb-3">
+                    <label for="addressLine2" class="form-label">Address Line 2</label>
+                    <input type="text" id="addressLine2" th:field="*{address.addressLine2}" class="form-control"/>
+                </div>
+                <div class="mb-3">
+                  <label for="city" class="form-label">City</label>
+                  <input type="text" id="city" th:field="*{address.city}" class="form-control"/>
+              </div>
+              <div class="mb-3">
+                <label for="region" class="form-label">State</label>
+                <input type="text" id="region" th:field="*{address.region}" class="form-control"/>
+            </div>
+            <div class="mb-3">
+              <label for="country" class="form-label">Country</label>
+              <input type="text" id="country" th:field="*{address.country}" class="form-control"/>
+          </div>
+          <div class="mb-3">
+            <label for="zipCode" class="form-label">Zip Code</label>
+            <input type="text" id="zipCode" th:field="*{address.zipCode}" class="form-control"/>
+        </div>
+                  <button type="submit" class="btn btn-primary">Update</button>
+              </form>
+          </div>
+          
           </div>
         </div>
       </div>
