@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="layout :: common-head(~{::title})">
+    JCCB: Transaction Details
+  </head>
+  <body class="d-flex flex-column h-100">
+    <header th:replace="layout :: header"></header>
+
+    <main class="flex-fill">
+      <div class="container">
+        <div class="row mt-5">
+          <div class="col-md-12 pt-3">
+            <div class="d-flex justify-content-between align-items-center pt-5">
+              <h1 class="text-center">Transaction Details</h1>
+              <button
+                onclick="function printPage() { window.print(); }; printPage();"
+                class="btn print-btn"
+              >
+                Print Page
+              </button>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div
+              class="card border border-2 border-success-subtle shadow-lg mt-2"
+            >
+              <div class="card-header">
+                <ul class="nav nav-pills card-header-pills">
+                  <li class="nav-item">
+                    <a
+                      class="nav-link"
+                      th:href="@{/update_user/{id}(id=${user.UserId})}"
+                      ><i class="bi bi-pencil"></i>Update User</a
+                    >
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" th:href="@{/register}"
+                      ><i class="bi bi-file-earmark-plus"></i>Add Another
+                      User</a
+                    >
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link disabled" aria-disabled="true"
+                      ><i class="bi bi-trash3"></i>Delete User</a
+                    >
+                  </li>
+                </ul>
+              </div>
+              <div class="card-body row">
+                <h2
+                  class="card-title col-12 d-flex justify-content-center mt-2"
+                >
+                  User #<span th:text="${user.userId}"></span>
+                </h2>
+                <div class="row justify-content-center">
+                  <div
+                    class="col-md-4 d-flex justify-content-end category-text"
+                  >
+                    User Name:
+                  </div>
+                  <div
+                    class="col-md-4 d-flex justify-content-start card-text"
+                    th:text="${user.username}"
+                  ></div>
+                </div>
+
+                <div class="row justify-content-center">
+                  <div
+                    class="col-md-4 d-flex justify-content-end category-text"
+                  >
+                    Password:
+                  </div>
+                  <div
+                    class="col-md-4 d-flex justify-content-start card-text"
+                    th:text="${user.password}"
+                  ></div>
+                </div>
+
+                <div class="row justify-content-center">
+                  <div
+                    class="col-md-4 d-flex justify-content-end category-text"
+                  >
+                    Full Name:
+                  </div>
+                  <div
+                    class="col-md-4 d-flex justify-content-start card-text"
+                    th:text="${user.fullname}"
+                  ></div>
+                </div>
+
+                <div class="row justify-content-center">
+                  <div class="col">
+                    <a th:href="@{/users}" class="btn btn-primary w-100"
+                      >Return to Users</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!--footer section-->
+    <footer th:replace="layout :: footer"></footer>
+    <!-- scripts -->
+    <div th:replace="layout :: CustomJS"></div>
+    <div th:replace="layout :: BootstrapJS"></div>
+  </body>
+</html>
