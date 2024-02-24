@@ -24,6 +24,7 @@
               </button>
             </div>
           </div>
+          <!--User details display card-->
           <div class="col-md-12">
             <div
               class="card border border-2 border-success-subtle shadow-lg mt-2"
@@ -56,6 +57,7 @@
                 >
                   User #<span th:text="${user.userId}"></span>
                 </h2>
+                <!--User details username-->
                 <div class="row justify-content-center">
                   <div
                     class="col-md-4 d-flex justify-content-end category-text"
@@ -67,7 +69,7 @@
                     th:text="${user.username}"
                   ></div>
                 </div>
-
+                  <!--User details password-->
                 <div class="row justify-content-center">
                   <div
                     class="col-md-4 d-flex justify-content-end category-text"
@@ -79,7 +81,7 @@
                     th:text="${user.password}"
                   ></div>
                 </div>
-
+                <!--User details user full name-->
                 <div class="row justify-content-center">
                   <div
                     class="col-md-4 d-flex justify-content-end category-text"
@@ -92,7 +94,89 @@
                   ></div>
                 </div>
 
-                <div class="row justify-content-center">
+                <div th:if="${user.address != null}">
+                <!--User details address line 1-->
+                  <div class="row justify-content-center">
+                    <div
+                      class="col-md-4 d-flex justify-content-end category-text"
+                    >
+                      Address Line 1:
+                    </div>
+                    <div
+                      class="col-md-4 d-flex justify-content-start card-text"
+                      th:text="${user.address.addressLine1}"
+                    ></div>
+                  </div> 
+                  <div th:if="${user.address.addressLine2 != null}">
+                  <!--User details address line 2-->
+                    <div class="row justify-content-center">
+                      <div
+                        class="col-md-4 d-flex justify-content-end category-text"
+                      >
+                        Address Line 2:
+                      </div>
+                      <div
+                        class="col-md-4 d-flex justify-content-start card-text"
+                        th:text="${user.address.addressLine2}"
+                      ></div>
+                    </div>
+                  </div>
+                  <!--User details address city-->
+                  <div class="row justify-content-center">
+                    <div
+                      class="col-md-4 d-flex justify-content-end category-text"
+                    >
+                      City:
+                    </div>
+                    <div
+                      class="col-md-4 d-flex justify-content-start card-text"
+                      th:text="${user.address.city}"
+                    ></div>
+                  </div>
+                 <!--User details address region-->
+                  <div class="row justify-content-center">
+                    <div
+                      class="col-md-4 d-flex justify-content-end category-text"
+                    >
+                      State:
+                    </div>
+                    <div
+                      class="col-md-4 d-flex justify-content-start card-text"
+                      th:text="${user.address.region}"
+                    ></div>
+                  </div>
+                   <!--User details address zip-->
+                  <div class="row justify-content-center">
+                    <div
+                      class="col-md-4 d-flex justify-content-end category-text"
+                    >
+                      Zip Code:
+                    </div>
+                    <div
+                      class="col-md-4 d-flex justify-content-start card-text"
+                      th:text="${user.address.zipCode}"
+                    ></div>
+                  </div>
+                   <!--User details address country-->
+                  <div class="row justify-content-center">
+                    <div
+                      class="col-md-4 d-flex justify-content-end category-text"
+                    >
+                      Country:
+                    </div>
+                    <div
+                      class="col-md-4 d-flex justify-content-start card-text"
+                      th:text="${user.address.country}"
+                    ></div>
+                  </div>
+                  <div th:else>
+                    <div class="row justify-content-center">
+                      <strong>Oops, Our records do not contain your address.</strong> 
+                      If you would like to add your address <a th:href="@{/update_user/{id}(id=${user.userId})}">update here</a>
+                  </div>
+                </div>
+
+                <div class="row justify-content-center mt-3">
                   <div class="col">
                     <a th:href="@{/users}" class="btn btn-primary w-100"
                       >Return to Users</a
@@ -103,44 +187,45 @@
             </div>
             <div th:if="${showUpdateForm}">
               <form th:action="@{'/user_details/' + ${user.userId} + '/update'}" th:object="${user}" method="post">
+                      <div class="mb-3">
+                          <label for="username" class="form-label">Username</label>
+                          <input type="text" id="username" th:field="*{username}" class="form-control" readonly/>
+                      </div>
+                      <div class="mb-3">
+                          <label for="password" class="form-label">Password</label>
+                          <input type="password" id="password" th:field="*{password}" class="form-control"/>
+                      </div>
+                      <div class="mb-3">
+                          <label for="name" class="form-label">Name</label>
+                          <input type="text" id="name" th:field="*{name}" class="form-control"/>
+                      </div>
+                      <!-- Address fields -->
+                      <div class="mb-3">
+                          <label for="addressLine1" class="form-label">Address Line 1</label>
+                          <input type="text" id="addressLine1" th:field="*{address.addressLine1}" class="form-control"/>
+                      </div>
+                    
+                      <div class="mb-3">
+                        <label for="addressLine2" class="form-label">Address Line 2</label>
+                        <input type="text" id="addressLine2" th:field="*{address.addressLine2}" class="form-control"/>
+                    </div>
+                    <div class="mb-3">
+                      <label for="city" class="form-label">City</label>
+                      <input type="text" id="city" th:field="*{address.city}" class="form-control"/>
+                    </div>
                   <div class="mb-3">
-                      <label for="username" class="form-label">Username</label>
-                      <input type="text" id="username" th:field="*{username}" class="form-control" readonly/>
+                    <label for="region" class="form-label">State</label>
+                    <input type="text" id="region" th:field="*{address.region}" class="form-control"/>
                   </div>
                   <div class="mb-3">
-                      <label for="password" class="form-label">Password</label>
-                      <input type="password" id="password" th:field="*{password}" class="form-control"/>
+                    <label for="country" class="form-label">Country</label>
+                    <input type="text" id="country" th:field="*{address.country}" class="form-control"/>
                   </div>
-                  <div class="mb-3">
-                      <label for="name" class="form-label">Name</label>
-                      <input type="text" id="name" th:field="*{name}" class="form-control"/>
-                  </div>
-                  <!-- Address fields -->
-                  <div class="mb-3">
-                      <label for="addressLine1" class="form-label">Address Line 1</label>
-                      <input type="text" id="addressLine1" th:field="*{address.addressLine1}" class="form-control"/>
-                  </div>
-                 
-                  <div class="mb-3">
-                    <label for="addressLine2" class="form-label">Address Line 2</label>
-                    <input type="text" id="addressLine2" th:field="*{address.addressLine2}" class="form-control"/>
-                </div>
-                <div class="mb-3">
-                  <label for="city" class="form-label">City</label>
-                  <input type="text" id="city" th:field="*{address.city}" class="form-control"/>
-              </div>
-              <div class="mb-3">
-                <label for="region" class="form-label">State</label>
-                <input type="text" id="region" th:field="*{address.region}" class="form-control"/>
-            </div>
-            <div class="mb-3">
-              <label for="country" class="form-label">Country</label>
-              <input type="text" id="country" th:field="*{address.country}" class="form-control"/>
-          </div>
-          <div class="mb-3">
-            <label for="zipCode" class="form-label">Zip Code</label>
-            <input type="text" id="zipCode" th:field="*{address.zipCode}" class="form-control"/>
-        </div>
+                    <div class="mb-3">
+                      <label for="zipCode" class="form-label">Zip Code</label>
+                      <input type="text" id="zipCode" th:field="*{address.zipCode}" class="form-control"/>
+                    </div>
+                    
                   <button type="submit" class="btn btn-primary">Update</button>
               </form>
           </div>
