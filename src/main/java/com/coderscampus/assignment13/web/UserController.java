@@ -20,6 +20,11 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
+	@GetMapping("/")
+    public String home() {
+		System.out.println("Home controller method called");
+        return "index"; 
+    }
 	@GetMapping("/register")
 	public String getCreateUser (ModelMap model) {
 		
@@ -50,7 +55,7 @@ public class UserController {
 	@GetMapping("/user_details/{userId}")
 	public String getOneUser (ModelMap model, @PathVariable Long userId) {
 		User user = userService.findById(userId);
-		var showUpdateForm = "true";
+		var showUpdateForm = "false";
 		if(user != null) {
 		model.put("users", Arrays.asList(user));
 		model.put("user", user);
@@ -74,8 +79,7 @@ public String updateUserDetailsAndAddress(@PathVariable Long userId, User user, 
         // Handle case where user does not exist
         return "redirect:/users";
     }
-	// Assuming 'user' contains the updated details and associated address from the form
-    // You might need to merge 'user' with 'existingUser' depending on how your form is set up
+	
     userService.updateUserAndAddress(user); // Call the new service method
     
     return "redirect:/user_details/" + userId; 

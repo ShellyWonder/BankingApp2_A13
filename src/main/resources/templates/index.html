@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://thymeleaf.org" lang="en">
-  <head th:replace="layout :: common-head(~{::title})">                                                                                                                                      
-    <title>Page Title</title>
-  </head>
+  <head>
+    <div th:replace="layout :: common-head">
+      <th:block th:with="title='Home'">
+      <title th:text="${title}">JCCB: Home</title> 
+    </th:block>
+  </div>
+    </head>
 
   <body class="d-flex flex-column h-100">
     <!--Nav section-->
