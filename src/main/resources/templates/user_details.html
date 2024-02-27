@@ -185,8 +185,8 @@
                 </div>
               </div>
             </div>
-            <div th:if="${showUpdateForm}">
-              <form th:action="@{'/user_details/' + ${user.userId} + '/update'}" th:object="${user}" method="post">
+            <div th:if="${displayUpdateForm}">
+              <form th:action="@{/user_details/{userId}/update(userId=${user.userId})}" th:object="${user}" method="post">
                       <div class="mb-3">
                           <label for="username" class="form-label">Username</label>
                           <input type="text" id="username" th:field="*{username}" class="form-control" readonly/>

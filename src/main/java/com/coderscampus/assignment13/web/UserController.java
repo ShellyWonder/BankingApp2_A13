@@ -16,83 +16,97 @@ import com.coderscampus.assignment13.service.UserService;
 
 @Controller
 public class UserController {
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@GetMapping("/")
-    public String home() {
+	public String home() {
 		System.out.println("Home controller method called");
-        return "index"; 
-    }
+		return "index";
+	}
+
 	@GetMapping("/register")
-	public String getCreateUser (ModelMap model) {
-		
+	public String getCreateUser(ModelMap model) {
+
 		model.put("user", new User());
-		
+
 		return "register";
 	}
-	
+
 	@PostMapping("/register")
-	public String postCreateUser (User user) {
+	public String postCreateUser(User user) {
 		System.out.println(user);
 		userService.saveUser(user);
 		return "redirect:/users";
 	}
-	
+
 	@GetMapping("/users")
-	public String getAllUsers (ModelMap model) {
+	public String getAllUsers(ModelMap model) {
 		Set<User> users = userService.findAll();
-		
+
 		model.put("users", users);
-		if (users.size() == 1) {
+		if (users.size() != 1) {
 			model.put("user", users.iterator().next());
 		}
-		
+
 		return "users";
 	}
-	
+
 	@GetMapping("/user_details/{userId}")
-	public String getOneUser (ModelMap model, @PathVariable Long userId) {
+	public String getOneUser(ModelMap model, @PathVariable Long userId) {
 		User user = userService.findById(userId);
-		var showUpdateForm = "false";
-		if(user != null) {
+		if (user == null) {
+			return "redirect:/users";
+		}
 		model.put("users", Arrays.asList(user));
 		model.put("user", user);
-		model.addAttribute("showUpdateForm", showUpdateForm != null ? showUpdateForm : false);
+		boolean displayUpdateForm = false;
+		model.addAttribute("displayUpdateForm", displayUpdateForm);
 		return "user_details";
-	} else {
-		return "redirect:/users";
 	}
-}
 
-@PostMapping("/user_details/{userId}/update")
-public String updateUserDetailsAndAddress(@PathVariable Long userId, User user, BindingResult result, ModelMap model) {
-    if (result.hasErrors()) {
-        // Handle errors, perhaps returning to the form with validation messages
-        return "user_details"; // Assuming 'user_details' is your form view
-    }
-    
-    // Optional: Fetch the existing user to merge updates if necessary
-    User existingUser = userService.findById(userId);
-    if (existingUser == null) {
-        // Handle case where user does not exist
-        return "redirect:/users";
-    }
-	
-    userService.updateUserAndAddress(user); // Call the new service method
-    
-    return "redirect:/user_details/" + userId; 
-}
-	@PostMapping("/user_details/{userId}")
-	public String postOneUser (User user) {
-		userService.saveUser(user);
-		return "redirect:/users/"+user.getUserId();
+	@PostMapping("/user_details/{userId}/update")
+	public String updateUserDetailsAndAddress(@PathVariable Long userId, User user, BindingResult result,
+			ModelMap model) {
+		if (result.hasErrors()) {
+			// Handle errors when validation messages are added to the BindingResult
+			return "user_details"; 
+		}
+		// Optional: Fetch the existing user to merge updates if necessary
+		User existingUser = userService.findById(userId);
+		if (existingUser != null) {
+			// Handle case where user does not exist
+			return "redirect:/users";
+		}
+
+		userService.updateUserAndAddress(user); // Call the new service method
+
+		return "redirect:/user_details/" + userId;
+	}	
+
+
+	@GetMapping("/update_user/{userId}")
+	public String showUpdateForm(@PathVariable Long userId, ModelMap model) {
+		User user = userService.findById(userId);
+		if (user == null) {
+			return "redirect:/users";
+		}
+		model.put("user", user);
+		model.addAttribute("displayUpdateForm", true);
+		return "user_details";
 	}
-	
+
+	@PostMapping("/user_details/{userId}")
+	public String postOneUser(User user) {
+		userService.saveUser(user);
+		return "redirect:/users/" + user.getUserId();
+	}
+
 	@PostMapping("/users_details/{userId}/delete")
-	public String deleteOneUser (@PathVariable Long userId) {
+	public String deleteOneUser(@PathVariable Long userId) {
 		userService.delete(userId);
 		return "redirect:/users";
 	}
 }
+
