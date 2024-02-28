@@ -2,12 +2,14 @@ package com.coderscampus.assignment13.web;
 
 import java.util.Arrays;
 import java.util.Set;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -35,11 +37,17 @@ public class UserController {
 	}
 
 	@PostMapping("/register")
-	public String postCreateUser(User user) {
-		System.out.println(user);
-		userService.saveUser(user);
-		return "redirect:/users";
-	}
+    public String postCreateUser(@ModelAttribute("user") User user, BindingResult result, ModelMap model) {
+    List<User> existingUsers = userService.findByUsername(user.getUsername());
+    if (!existingUsers.isEmpty()) {
+        // Adds an error message to the model if the username already exists
+        model.addAttribute("errorMessage", "Username already exists. Please choose a different one.");
+        return "register"; // Return back to the registration page
+    }
+    userService.saveUser(user);
+    return "redirect:/users";
+}
+
 
 	@GetMapping("/users")
 	public String getAllUsers(ModelMap model) {
@@ -67,7 +75,7 @@ public class UserController {
 	}
 
 	@PostMapping("/user_details/{userId}/update")
-	public String updateUserDetailsAndAddress(@PathVariable Long userId, User user, BindingResult result,
+	public String updateUserDetailsAndAddress(@PathVariable Long userId, @ModelAttribute User user, BindingResult result,
 			ModelMap model) {
 		if (result.hasErrors()) {
 			// Handle errors when validation messages are added to the BindingResult
@@ -75,13 +83,12 @@ public class UserController {
 		}
 		// Optional: Fetch the existing user to merge updates if necessary
 		User existingUser = userService.findById(userId);
-		if (existingUser != null) {
+		if (existingUser == null) {
 			// Handle case where user does not exist
 			return "redirect:/users";
 		}
 
-		userService.updateUserAndAddress(user); // Call the new service method
-
+		userService.updateUserAndAddress(user); 
 		return "redirect:/user_details/" + userId;
 	}	
 
@@ -98,7 +105,7 @@ public class UserController {
 	}
 
 	@PostMapping("/user_details/{userId}")
-	public String postOneUser(User user) {
+	public String postOneUser(@ModelAttribute User user) {
 		userService.saveUser(user);
 		return "redirect:/users/" + user.getUserId();
 	}
