@@ -7,7 +7,7 @@
   </th:block>
   </head>
   <body class="d-flex flex-column h-100">
-    <header th:replace="layout :: header"></header>
+  <header th:replace="~{layout :: header}"></header>
     <main class="flex-fill">
       <div class="container-fluid">
         <div class="row mt-5">
@@ -66,7 +66,5 @@
     </main>
     <footer th:replace="~{layout :: footer}"></footer>
 
-    <!-- scripts -->
-    <div th:replace="~{layout :: BootstrapJS}"></div>
   </body>
 </html>
