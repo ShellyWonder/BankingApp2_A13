@@ -241,6 +241,18 @@
                   <button type="submit" class="btn btn-primary ms-3 mb-3">Update</button>
                   
               </form>
+              <div th:if="${displayCreateAccountForm}" class=" mt-3 mb-3" >
+                <form th:action="@{/user_details/{userId}/update(userId=${user.userId})}" th:object="${user}" method="post">
+                  <div class="row justify-content-center category-text mt-3 ms-3 me-3 mb-3">Create Account</div>
+                  <div class="row mx-1">
+                    <div class="col-md-6 mb-3">
+                      <label for="accountname" class="form-label">Account Name</label>
+                      <input type="text" id="accountname" th:field="*{accountname}" class="form-control" />
+                    </div>
+                  </div>
+                </form>
+              </div>
+
           </div>
           
         </div>

@@ -62,7 +62,7 @@ public class UserService {
 	}
 
 	@Transactional
-public User updateUserAndAddress(User updatedUser) {
+	public User updateUserAndAddress(User updatedUser) {
     // Check if the user already exists in the database
     Optional<User> existingUserOpt = userRepo.findById(updatedUser.getUserId());
     if (existingUserOpt.isPresent()) {
