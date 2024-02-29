@@ -121,6 +121,39 @@
         <!-- Unique page content will be inserted here -->
       </div>
     </main>
+    <div th:fragment="back-to-users">
+    <div class="row justify-content-center mt-3">
+      <div class="col">
+        <a th:href="@{/users}" class="btn btn-primary w-100"
+          >Return to Users (back)</a
+        >
+      </div>
+    </div>
+    </div>
+    <div th:fragment="create-account">
+      <div class="row justify-content-center mt-3">
+        <div class="col">
+          <a th:href="@{/users/{userId}/accounts}" class="btn btn-primary w-100"
+            >Create New Account</a
+          >
+        </div>
+      </div>
+      </div>
+      <div th:fragment="btn_group">
+        <div class="row d-flex justify-content-center"> 
+          <div class="btn-group btn-group-sm col-6 mt-3" role="group" aria-label="Large button group">
+                  <a th:href="@{/users}" class="btn btn-primary"
+                  >Return to Users (back)</a
+                >
+                <a th:href="@{/users/{userId}/accounts}" class="btn btn-primary"
+                >Create New Account</a
+              >
+              <a th:href="@{/update_user/{id}(id=${user.userId})}" class="btn btn-primary"
+              >Add Address/Update User</a
+            >
+          </div>
+        </div>
+    </div>
     <footer th:fragment="footer">
       <div class="styleFooter mt-auto py-3 sticky-bottom sticky-footer">
         <div class="container-fluid">

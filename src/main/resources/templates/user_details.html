@@ -49,7 +49,12 @@
                     <a class="nav-link disabled" aria-disabled="true"
                       ><i class="bi bi-trash3"></i>Delete User</a
                     >
-                  </li>
+                  </li> 
+                <li class="nav-item">
+                  <a class="nav-link disabled" aria-disabled="true"
+                  ><i class="bi bi-piggy-bank"></i> Create New Account/Update</a
+                  >
+                </li>
                 </ul>
               </div>
               <div class="card-body row">
@@ -94,7 +99,7 @@
                     th:text="${user.name}"
                   ></div>
                 </div>
-
+                
                 <div th:if="${user.address != null}">
                 <!--User details address line 1-->
                   <div class="row justify-content-center">
@@ -170,21 +175,15 @@
                       th:text="${user.address.country}"
                     ></div>
                   </div>
-                  <div th:else>
-                    <div class="row justify-content-center">
-                      <strong>Oops, Our records do not contain your address.</strong> 
-                      If you would like to add your address <a th:href="@{/update_user/{id}(id=${user.userId})}">update here</a>
-                  </div>
+                  <div th:replace="~{layout:: btn_group}"></div>
                 </div>
-
-                <div class="row justify-content-center mt-3">
-                  <div class="col">
-                    <a th:href="@{/users}" class="btn btn-primary w-100"
-                      >Return to Users</a
-                    >
-                  </div>
+                <div th:if="${user.address == null}">
+                  <div class="row d-flex justify-content-center">
+                    <div class="col-12 d-flex justify-content-center mt-2"><strong>Oops, Our records do not contain your address.</strong></div>
+                      <div class="col-12 d-flex justify-content-center">If you would like to add your address&nbsp; <a th:href="@{/update_user/{id}(id=${user.userId})}"> update here</a></div>
                 </div>
-              </div>
+                <div th:replace="~{layout:: btn_group}"></div>
+               </div>
             </div>
           </div>
             <div th:if="${displayUpdateForm}" class=" mt-3 mb-3" >
@@ -193,11 +192,11 @@
                 <div class="row mx-1">
                   <div class="col-md-6 mb-3">
                     <label for="username" class="form-label">Username</label>
-                    <input type="text" id="username" th:field="*{username}" class="form-control" readonly/>
+                    <input type="text" id="username" th:field="*{username}" class="form-control" />
                   </div>
                   <div class="col-md-6 mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" id="password" th:field="*{password}" class="form-control"/>
+                    <input type="text" id="password" th:field="*{password}" class="form-control"/>
                   </div>
                 </div>
               
@@ -243,7 +242,6 @@
                   
               </form>
           </div>
-          
           
         </div>
       </div>
