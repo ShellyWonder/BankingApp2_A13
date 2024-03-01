@@ -13,9 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.coderscampus.assignment13.domain.Account;
 import com.coderscampus.assignment13.domain.Address;
 import com.coderscampus.assignment13.domain.User;
-import com.coderscampus.assignment13.repository.AccountRepository;
 import com.coderscampus.assignment13.repository.UserRepository;
-
+import com.coderscampus.assignment13.repository.AccountRepository;
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
@@ -23,8 +22,15 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepo;
-	@Autowired
-	private AccountRepository accountRepo;
+	
+    @Autowired
+    private AccountRepository accountRepo;
+
+    
+    public UserService(UserRepository userRepo, AccountRepository accountRepo) {
+        this.userRepo = userRepo;
+        this.accountRepo = accountRepo;
+    }
 
 	public List<User> findByUsername(String username) {
 		return userRepo.findByUsername(username);
@@ -102,23 +108,40 @@ public class UserService {
     }
 }
 
+@Transactional
+public Account createAccountForUser(Long userId, Account account) {
+    User user = userRepo.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
+    account.setUser(user); // Associate the account with the user
+    Account savedAccount = accountRepo.save(account); // Save the account, which is now linked to the user
+    
+    // The user object will automatically be updated because of the cascading settings
+    
+    return savedAccount; // Return the saved account
+}
 
-	public User saveUser(User user) {
-		if (user.getUserId() == null) {
-			Account checking = new Account();
-			checking.setAccountName("Checking Account");
-			checking.getUsers().add(user);
-			Account savings = new Account();
-			savings.setAccountName("Savings Account");
-			savings.getUsers().add(user);
+public User saveUser(User user) {
+    if (user.getUserId() == null) {
+        Account checking = new Account();
+        checking.setAccountName("Checking Account");
+        // Link the account to the user
+        checking.setUser(user);
 
-			user.getAccounts().add(checking);
-			user.getAccounts().add(savings);
-			accountRepo.save(checking);
-			accountRepo.save(savings);
-		}
-		return userRepo.save(user);
+        Account savings = new Account();
+        savings.setAccountName("Savings Account");
+        // Link the account to the user
+        savings.setUser(user);
+
+        // Since CascadeType.ALL is set, adding accounts to the user's list is enough
+        // Hibernate will automatically save the accounts when the user is saved
+        user.getAccounts().add(checking);
+        user.getAccounts().add(savings);
+
+        // Save the user and its associated accounts
+    
 	}
+    return userRepo.save(user);
+}
+
 
 	public void delete(Long userId) {
 		userRepo.deleteById(userId);

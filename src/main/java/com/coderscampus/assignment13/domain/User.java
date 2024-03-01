@@ -10,9 +10,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -59,10 +57,7 @@ public class User {
 	public void setCreatedDate(LocalDate createdDate) {
 		this.createdDate = createdDate;
 	}
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "user_account",
-	           joinColumns = @JoinColumn(name = "user_id"), 
-	           inverseJoinColumns = @JoinColumn(name = "account_id"))
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	public List<Account> getAccounts() {
 		return accounts;
 	}
@@ -76,6 +71,12 @@ public class User {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
+
+	// sets the back reference from an account to a user
+    public void addAccount(Account account) {
+        accounts.add(account);
+        account.setUser(this);
+    }
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", username=" + username + ", password=" + password + ", name=" + name

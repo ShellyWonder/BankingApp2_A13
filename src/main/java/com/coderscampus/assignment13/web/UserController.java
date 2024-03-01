@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.coderscampus.assignment13.domain.Account;
 import com.coderscampus.assignment13.domain.User;
 import com.coderscampus.assignment13.service.UserService;
 
@@ -71,6 +72,8 @@ public class UserController {
 		model.put("user", user);
 		boolean displayUpdateForm = false;
 		model.addAttribute("displayUpdateForm", displayUpdateForm);
+		boolean displayCreateAccountForm = false;
+		model.addAttribute("displayCreateAccountForm", displayCreateAccountForm);
 		return "user_details";
 	}
 
@@ -103,6 +106,29 @@ public class UserController {
 		model.addAttribute("displayUpdateForm", true);
 		return "user_details";
 	}
+
+	@GetMapping("/user_details/{userId}/create_account")
+public String showCreateAccountForm(@PathVariable Long userId, ModelMap model) {
+    User user = userService.findById(userId);
+    if (user == null) {
+        return "redirect:/users";
+    }
+    model.addAttribute("user", user);
+    model.addAttribute("account", new Account());
+    model.addAttribute("displayCreateAccountForm", true); // To control the form display on the page
+    return "user_details"; // Return to the user details page with the form enabled
+}
+@PostMapping("/user_details/{userId}/create_account")
+public String createAccountForUser(@PathVariable Long userId, @ModelAttribute Account account, BindingResult result, ModelMap model) {
+    if (result.hasErrors()) {
+        model.addAttribute("errorMessage", "Error creating account");
+        return "user_details"; // Return with error message
+    }
+    userService.createAccountForUser(userId, account); // Assume this method handles account creation
+    return "redirect:/user_details/" + userId; // Redirect back to the user details page
+}
+
+
 
 	@PostMapping("/user_details/{userId}")
 	public String postOneUser(@ModelAttribute User user) {
