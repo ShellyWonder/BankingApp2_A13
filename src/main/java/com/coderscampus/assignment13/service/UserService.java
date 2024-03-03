@@ -22,10 +22,9 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepo;
-	
     @Autowired
     private AccountRepository accountRepo;
-
+	
     
     public UserService(UserRepository userRepo, AccountRepository accountRepo) {
         this.userRepo = userRepo;
@@ -140,6 +139,15 @@ public User saveUser(User user) {
     
 	}
     return userRepo.save(user);
+}
+
+
+@Transactional
+public Account updateAccountName(Long accountId, String accountName) {
+    Account account = accountRepo.findById(accountId)
+            .orElseThrow(() -> new EntityNotFoundException("Account not found"));
+    account.setAccountName(accountName);
+    return accountRepo.save(account);
 }
 
 

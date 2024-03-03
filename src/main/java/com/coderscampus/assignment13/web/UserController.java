@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,13 +17,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.coderscampus.assignment13.domain.Account;
 import com.coderscampus.assignment13.domain.User;
+import com.coderscampus.assignment13.repository.AccountRepository;
 import com.coderscampus.assignment13.service.UserService;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Controller
 public class UserController {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private AccountRepository accountRepo;
 
 	@GetMapping("/")
 	public String home() {
@@ -107,8 +114,8 @@ public class UserController {
 		return "user_details";
 	}
 
-	@GetMapping("/user_details/{userId}/create_account")
-public String showCreateAccountForm(@PathVariable Long userId, ModelMap model) {
+	@GetMapping("/user_details/{userId}/accounts")
+	public String showCreateAccountForm(@PathVariable Long userId, ModelMap model) {
     User user = userService.findById(userId);
     if (user == null) {
         return "redirect:/users";
@@ -118,16 +125,34 @@ public String showCreateAccountForm(@PathVariable Long userId, ModelMap model) {
     model.addAttribute("displayCreateAccountForm", true); // To control the form display on the page
     return "user_details"; // Return to the user details page with the form enabled
 }
-@PostMapping("/user_details/{userId}/create_account")
-public String createAccountForUser(@PathVariable Long userId, @ModelAttribute Account account, BindingResult result, ModelMap model) {
+	@PostMapping("/user_details/{userId}/accounts")
+	public String createAccountForUser(@PathVariable Long userId, @ModelAttribute Account account, BindingResult result, ModelMap model) {
     if (result.hasErrors()) {
         model.addAttribute("errorMessage", "Error creating account");
         return "user_details"; // Return with error message
     }
-    userService.createAccountForUser(userId, account); // Assume this method handles account creation
-    return "redirect:/user_details/" + userId; // Redirect back to the user details page
+    userService.createAccountForUser(userId, account); 
+    return "redirect:/user_details/" + userId; 
 }
 
+@GetMapping("/users/{userId}/accounts/{accountId}/edit")
+public String editAccountForm(@PathVariable Long userId, @PathVariable Long accountId, Model model) {
+    Account account = accountRepo.findById(accountId)
+            .orElseThrow(() -> new EntityNotFoundException("Account not found"));
+    model.addAttribute("account", account);
+    model.addAttribute("userId", userId); // Pass userId to the model for navigation purposes
+    return "account"; 
+}
+
+@PostMapping("/users/{userId}/accounts/{accountId}/edit")
+public String updateAccount(@PathVariable Long userId, @PathVariable Long accountId, @ModelAttribute("account") Account account, BindingResult result, ModelMap model) {
+    if (result.hasErrors()) {
+        model.addAttribute("errorMessage", "Error updating account");
+        return "account";
+    }
+    userService.updateAccountName(accountId, account.getAccountName());
+    return "redirect:/user_details/" + userId;
+}
 
 
 	@PostMapping("/user_details/{userId}")
