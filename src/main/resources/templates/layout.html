@@ -145,7 +145,7 @@
                   <a th:href="@{/users}" class="btn btn-primary"
                   >Return to Users (back)</a
                 >
-                <a th:href="@{/user_details/{userId}/accounts(id=${user.userId})}" class="btn btn-primary"
+                <a th:href="@{/user_details/{userId}/accounts(userId=${user.userId})}" class="btn btn-primary"
                 >Create New Bank Account</a
               >
               <a th:href="@{/update_user/{id}(id=${user.userId})}" class="btn btn-primary"

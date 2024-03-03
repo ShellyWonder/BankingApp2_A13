@@ -4,7 +4,7 @@
     <div th:replace="~{layout :: common-head}"></div>
 
       <th:block th:with="title='Edit Accounts'">
-      <title th:text="${title}">JCCB: Edit Account</title> 
+      <title th:text="${title}">JCCB: Edit Bank Account</title> 
     </th:block>
   </div>
     </head>
@@ -14,12 +14,12 @@
     <main class="flex-fill">
       <div class="container-fluid">
         <div class="row mt-5">
-          <div class="col-md-12 pt-3"><h1 class="text-center my-5">Edit Your Account</h1>
+          <div class="col-md-12 pt-3"><h1 class="text-center my-5">Edit Bank Account</h1>
             <!-- Display error message 
               <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
                 <p th:text="${errorMessage}"></p>
             </div> -->
-            <form class="row g-3" action="" th:action="@{/users/{userId}/accounts/{accountId}}" method="POST">
+            <form class="row g-3" action="" th:action="@{/users/{userId}/accounts/{accountId}/edit(userId=${userId}, accountId=${account.accountId})}" th:object="${account}" method="POST">
               <div class="col-12 mb-3">
                 <label for="accountName" class="form-label" aria label="accountName"
                   >Account Name</label
@@ -31,7 +31,7 @@
                 <input
                   type="submit"
                   class="btn btn-primary"
-                  value="Edit Account"
+                  value="Update Account"
                 />
               </div>
 
