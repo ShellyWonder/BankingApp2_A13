@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.List;
 
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -69,8 +70,8 @@ public class UserController {
 		return "users";
 	}
 
-	@GetMapping("/user_details/{userId}")
-	public String getOneUser(ModelMap model, @PathVariable Long userId) {
+		@GetMapping("/user_details/{userId}")
+		public String getOneUser(ModelMap model, @PathVariable Long userId) {
 		User user = userService.findById(userId);
 		if (user == null) {
 			return "redirect:/users";
@@ -166,5 +167,30 @@ public String updateAccount(@PathVariable Long userId, @PathVariable Long accoun
 		userService.delete(userId);
 		return "redirect:/users";
 	}
+
+	@GetMapping("/users/{userId}/accounts/{accountId}/confirmAccountDelete")
+public String showConfirmAccountDelete(@PathVariable Long userId, @PathVariable Long accountId, Model model) {
+    Optional<Account> accountOpt = accountRepo.findById(accountId);
+    
+    if (accountOpt.isPresent()) {
+        Account account = accountOpt.get();
+        model.addAttribute("userId", userId);
+        model.addAttribute("accountId", account.getAccountId());
+        model.addAttribute("accountName", account.getAccountName());
+		// Ensure errorMessage is always in the model
+		model.addAttribute("errorMessage", ""); 
+    } else {
+        // Pass an error message to the model
+        model.addAttribute("errorMessage", "Account not found.");
+    }
+    return "confirmAccountDelete"; 
+	}
+
+	@PostMapping("/users/{userId}/accounts/{accountId}/delete")
+	public String deleteSingleAccount(@PathVariable Long userId, @PathVariable Long accountId) {
+		userService.deleteOneAccount(accountId);
+		return "redirect:/user_details/" + userId;
+    }
+
 }
 

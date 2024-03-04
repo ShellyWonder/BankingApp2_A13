@@ -142,18 +142,25 @@ public User saveUser(User user) {
 }
 
 
-@Transactional
-public Account updateAccountName(Long accountId, String accountName) {
+    @Transactional
+    public Account updateAccountName(Long accountId, String accountName) {
     Account account = accountRepo.findById(accountId)
             .orElseThrow(() -> new EntityNotFoundException("Account not found"));
     account.setAccountName(accountName);
     return accountRepo.save(account);
 }
 
-
+    @Transactional
 	public void delete(Long userId) {
 		userRepo.deleteById(userId);
 	}
+
+    @Transactional
+    public void deleteOneAccount(Long accountId) {
+    // Optional: Additional logic before deleting the account, e.g., checks or cleanup
+    accountRepo.deleteById(accountId);
+}
+
 }
 
 
