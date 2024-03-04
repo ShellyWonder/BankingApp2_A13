@@ -141,26 +141,40 @@
       </div>
       <div th:fragment="btn_group">
         <div class="row d-flex justify-content-center"> 
-          <div class="btn-group btn-group-sm col-6 mt-3" role="group" aria-label="Large button group">
-                  <a th:href="@{/users}" class="btn btn-primary"
+          <div class="btn-group w-100 col mt-3" role="group" aria-label="Large button group">
+                  <a th:href="@{/users}" class="btn btn-primary me-1"
                   >Return to Users (back)</a
                 >
-                <a th:href="@{/user_details/{userId}/accounts(userId=${user.userId})}" class="btn btn-primary"
+                <a th:href="@{/user_details/{userId}/accounts(userId=${user.userId})}" class="btn btn-primary me-1"
                 >Create New Bank Account</a
               >
-              <a th:href="@{/update_user/{id}(id=${user.userId})}" class="btn btn-primary"
+              <a th:href="@{/update_user/{id}(id=${user.userId})}" class="btn btn-primary me-1"
               >Add Address/Update User</a
             >
+            
           </div>
         </div>
     </div>
+    <div th:fragment="btn_group_account">
+      <div class="col d-flex justify-content-end mb-3">
+        <input
+                    type="submit"
+                    class="btn btn-primary"
+                    value="Update Account"
+        />
+        <a  th:href="@{/users/{userId}/accounts/{accountId}/confirmAccountDelete(userId=${userId}, accountId=${account.accountId})}" class="btn btn-primary">
+          Delete Account
+      </a>
+      <a th:href="@{/user_details/{userId}(userId=${userId})}" class="btn btn-primary">Cancel</a>
+    </div>
+  </div>
     <footer th:fragment="footer">
       <div class="styleFooter mt-auto py-3 sticky-bottom sticky-footer">
         <div class="container-fluid">
           <div class="row row-cols-1 row-cols-lg-3 gy-2">
             <div class="col order-last order-lg-first">
               <div class="text-light">
-                &copy;<span id="currentYear"></span>&nbsp;SJ Wonder |
+                &copy;<span id="currentYear">2024</span>&nbsp;SJ Wonder |
                 <a href="mailto:shelly@wonderwebdev.com"
                   ><strong>shelly@wonderwebdev.com</strong></a
                 >

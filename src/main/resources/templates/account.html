@@ -27,14 +27,7 @@
                 <input type="text" id="accountName" th:field="*{accountName}" class="form-control" />
               </div>
 
-              <div class="col d-flex justify-content-end mb-3">
-                <input
-                  type="submit"
-                  class="btn btn-primary"
-                  value="Update Account"
-                />
-              </div>
-
+              <div th:replace="~{layout::btn_group_account}"></div>
             </form>
           </div>
         </div>
