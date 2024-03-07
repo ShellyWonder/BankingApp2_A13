@@ -46,7 +46,7 @@
                       >
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link disabled" aria-disabled="true"
+                      <a class="nav-link" th:href="@{/users/{userId}/confirmUserDelete(userId=${user.userId})}"
                         ><i class="bi bi-trash3"></i>Delete User</a
                       >
                     </li> 
@@ -199,12 +199,14 @@
                     <div class="row d-flex justify-content-center">
                       <div class="col-12 d-flex justify-content-center mt-2"><strong>Oops, Our records do not contain your address.</strong></div>
                         <div class="col-12 d-flex justify-content-center">If you would like to add your address click the button below.</div>
+                        <div th:replace="~{layout:: btn_group}"></div>
                   </div>
-                  <div th:if="${user.accounts == null}">
+                  <!--Feature to be implemented later 
+                    <div th:if="${user.accounts == null}">
                     <div class="row d-flex justify-content-center">
                       <div class="col-12 d-flex justify-content-center mt-2"><strong>Oops, Our records do not show a bank account.</strong></div>
                         <div class="col-12 d-flex justify-content-center">If you would like to add a bank account click the button below.</div>
-                  </div>
+                  </div> -->
 
                   <div th:replace="~{layout:: btn_group}"></div>
                 </div>
@@ -263,6 +265,8 @@
                 </div>    
                
                   <button type="submit" class="btn btn-primary ms-3 mb-3">Update</button>
+                  <!-- Cancel Button -->
+                  <a class="btn btn-danger mb-3" th:href="@{/user_details/{userId}(userId=${userId})}">Cancel</a>
                   
               </form>
             </div>
@@ -276,6 +280,7 @@
                     </div>
                   </div>
                   <button type="submit" class="btn btn-primary ms-3 mb-3">Submit New Bank Account</button>
+                  <a class="btn btn-danger mb-3" th:href="@{/user_details/{userId}(userId=${userId})}">Cancel</a>
                 </form>
               </div>
         </div>

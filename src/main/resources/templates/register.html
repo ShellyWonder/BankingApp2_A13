@@ -12,7 +12,7 @@
       <div class="container-fluid">
         <div class="row mt-5">
           <div class="col-12 pt-3">
-            <h1 class="text-center my-5">Create Your Account</h1>
+            <h1 class="d-flex justify-content-start my-5">Create Your Account</h1>
             <!-- Display error message if username exists -->
               <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
                 <p th:text="${errorMessage}"></p>
@@ -51,12 +51,13 @@
               </div>
               
 
-              <div class="col d-flex justify-content-end mb-3">
+              <div class="col justify-content-start mb-3">
                 <input
                   type="submit"
                   class="btn btn-primary"
                   value="Create Account"
                 />
+                <a class="btn btn-danger ms-1" th:href="@{/}">Back</a>
               </div>
 
             </form>
