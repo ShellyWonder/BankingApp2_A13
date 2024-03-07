@@ -136,8 +136,8 @@ public class UserController {
     return "redirect:/user_details/" + userId; 
 }
 
-@GetMapping("/users/{userId}/accounts/{accountId}/edit")
-public String editAccountForm(@PathVariable Long userId, @PathVariable Long accountId, Model model) {
+	@GetMapping("/users/{userId}/accounts/{accountId}/edit")
+	public String editAccountForm(@PathVariable Long userId, @PathVariable Long accountId, Model model) {
     Account account = accountRepo.findById(accountId)
             .orElseThrow(() -> new EntityNotFoundException("Account not found"));
     model.addAttribute("account", account);
@@ -161,7 +161,17 @@ public String updateAccount(@PathVariable Long userId, @PathVariable Long accoun
 		userService.saveUser(user);
 		return "redirect:/users/" + user.getUserId();
 	}
-
+	
+	@GetMapping("/users/{userId}/confirmUserDelete")
+	public String showConfirmUserDelete(@PathVariable Long userId, Model model) {
+		User user  = userService.findById(userId);
+		if (user.getUserId() == null) {
+			model.addAttribute("errorMessage", "User not found.");
+			return "errorPage"; // Assuming you have a specific error page or redirect as needed
+		}
+		model.addAttribute("user", user);
+		return "confirmUserDelete";
+	}
 	@PostMapping("/users_details/{userId}/delete")
 	public String deleteOneUser(@PathVariable Long userId) {
 		userService.delete(userId);
