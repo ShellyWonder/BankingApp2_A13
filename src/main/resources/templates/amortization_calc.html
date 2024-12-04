@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+
+<head>
+    <!--PLACEHOLDER TEXT (CHANGE)-->
+    <title>WHAT'S MY PAYMENT?: A Coding Project by SJ Wonder</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Bootstrap icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!--font awesome-->
+    <script src="https://kit.fontawesome.com/5db21ba9c6.js" crossorigin="anonymous"></script>
+    <!-- Custom CSS -->
+    <link href="/css/site.css" rel="stylesheet" />
+    <link rel="icon" type="img/png" href="img/favicon/favicon-32x32.png" />
+    
+</head>
+
+<body class="d-flex flex-column h-100">
+    <!--Nav section-->
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand logoFont" href="index.html"><img src="img/logoMarkWhite.png" class="p-1" width="30"
+                    height="39" />WHAT'S MY PAYMENT?</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <li class="nav-item">
+                        <a class="nav-link " href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/app.html">The App</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/code.html">The Code</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" target="_blank" href="https://github.com/ShellyWonder/loan_calc2022">Git
+                            Repo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" target="_blank" href="http://www.wonderwebdev.com/#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!--Main section-->
+    <main class="flex-shrink-0">
+
+        <div class="container px-4 py-5 mt-5">
+            <div class="row mt-3">
+                <h1>WHAT'S MY PAYMENT?</h1>
+
+                <!--COL 1 LOAN CALC-->
+                <div class="col  ">
+                    <form class="shadow-sm p-3 mb-5 rounded" >
+                        <div class="form-group">
+                            <label for="loanAmount" class="form-label"> Loan Amount:</label>
+                            <input id="loanAmount" type="number" value="15000" class="form-control" placeholder="Enter amount to borrow" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="loanTerm">Payments:</label>
+                            <input id="loanTerm" class="form-control" type="number" value="60" placeholder="Enter an Amount">
+                        </div>
+                        <div class="form-group">
+                            <label for="loanRate">Rate:</label>
+                            <input id="loanRate" class="form-control" type="number" value="3" placeholder="Enter an Amount">
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button type="button" id="btnSubmit"
+                                class="btn btn-outline-primary text-dark mt-3">Calculate Monthly
+                                Payment</button>
+                        </div>
+                    </form>
+                </div>
+                <!--  RIGHT COL 2---->
+                <div class="col">
+                    <div class="d-flex fluid justify-content-end">
+                        <div>
+                            <h3><i>My Monthly Payment</i></h3>
+                        </div>
+                        <div class=" col d-flex justify-content-end mt-5">
+                            <div>
+                                <h4 id="payment">$000.00</h4>
+                                <!-- DISPLAY PAYMENT CALCULATION HERE-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row p-5" row cols-md-2>
+                        <div class="col">
+                            <div id= "userResults">
+                            <p>Total Principal:</p>
+                            <p>Total Interest:</p>
+                            <p>Total Cost:</p>
+                           </div>
+                        </div>
+                        <div class="col">
+                            <div class="d-flex justify-content-end">
+                                <!--insert total results here-->
+                                <div id="results">
+                                    <p id="totalPrincipal">$0,000.00</p>
+                                    <p id="totalInterest">$0,000.00</p>
+                                    <p id="totalCost">$0,000.00</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--  BOTTOM COL 3-->
+                <div class="col-12 mt-3">
+                    <div id="printSection" class="d-none text-end mb-4">
+                        <button class="btn btn-outline-dark" onclick="window.print()">
+                            <i class="bi bi-printer"></i> Print Schedule
+                        </button>
+                    </div>
+                    <table class="table table-responsive table-striped table-hover" border = "1" >
+                        <thead class="table-success">
+                            <th class="ps-5">Month</th>
+                            <th>Payment</th>
+                            <th>Principal</th>
+                            <th>Interest</th>
+                            <th>Total Interest</th>
+                            <th>Balance</th>
+                        </thead>
+                        <tbody id="scheduleBody">
+
+                        </tbody>
+                    </table>
+                    
+                </div>
+            </div>
+        </div>
+    </main>
+    <!--footer section-->
+    <footer class="footer  min-vw-100 mt-auto py-3 bg-dark sticky-footer">
+        <div class="container-fluid">
+            <div class="row row-cols-1 row-cols-lg-3 gy-2">
+                <div class="col order-last order-lg-first text-light">
+                    <div> &copy;
+                        <span id="copyrightYear"></span>&nbsp;SJ Wonder |
+                        <a href="mailto:shelly@wonderwebdev.com"> shelly@wonderwebdev.com</a>
+                    </div>
+                </div>
+                <div class="
+                  col
+                  d-flex
+                  align-items-center
+                  justify-content-start justify-content-lg-center
+                ">
+                    <img src="img/White logo - no background.svg" alt="SJ Wonder Logo" height="65" />
+                </div>
+                <!--using font awesome for social media icons-->
+                <div class="
+                  col
+                  d-flex
+                  align-items-center
+                  justify-content-start justify-content-lg-end
+                ">
+                    <div class="row">
+                        <div class="col">
+                            <a href="https://www.linkedin.com/in/shelly-wonder-153990233/"><i
+                                    class="fab fa-linkedin fa-2x"></i></a>
+                        </div>
+                        <div class="col">
+                            <a href="https://github.com/ShellyWonder"><i class="fab fa-github fa-2x"></i></a>
+                        </div>
+    
+                    </div>
+                </div>
+            </div>
+            <!--container close tag-->
+        </div>
+    </footer>
+    <!--TEMPLATE FOR DISPLAY TABLE-->
+    <template id="schedule-Template">
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </template>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
+    <!-- Custom JS -->
+    <script src="js/site2.js"></script>
+    <script>
+        document.getElementById("btnSubmit").addEventListener("click", getValues);
+    </script>
+</body>
+
+</html>
