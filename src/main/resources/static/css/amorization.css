@@ -1,0 +1,139 @@
+:root {
+  --sjw-dark-color: #154001;
+  --sjw-light-color: #eee;
+  --sjw-primary-color: #001e43;
+  --sjw-secondary-color: #ff993b;
+  --sjw-lightbg-color: #a5bf6b;
+}
+
+
+.logoFont {
+  font-family: ltc-broadway-engraved, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+main > .container {
+  padding: 60px 15px 0;
+  margin-bottom: 5rem;
+  min-height: 90vh;
+}
+
+h1 {
+  color: var(--sjw-dark-color);
+}
+
+H4 {
+  font-size: 4em;
+}
+
+h2,
+h3,
+h5,
+h6 {
+  color: var(--primary-color);
+}
+
+/*Navbar styles*/
+.navbar-dark {
+  background-color: var(--sjw-dark-color) !important;
+}
+
+.jsicon {
+  color: rgb(226, 211, 4);
+}
+
+.bsicon {
+  color: purple;
+}
+
+.htmlicon {
+  color: #ff4500;
+}
+
+.cssicon {
+  color: #0b52d6;
+}
+
+.checkListIcon {
+  color: var(--sjw-secondary-color);
+}
+.table-striped {
+  background-color: var(--sjw-lightbg-color);
+}
+
+/*--button styles override Bootstrap styles--*/
+.btn.outline-primary {
+  color: var(--sjw-secondary-color);
+  border-color: var(--sjw-secondary-color) !important;
+}
+
+/* form background override bootstrap: added opacity 25%*/
+form {
+  background-color: #a5bf6b;
+  opacity: 0.75;
+}
+form:hover {
+  border: 3px solid var(--sjw-secondary-color);
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:active,
+.btn-outline-primary:focus {
+  border-color: var(--sjw-primary-color);
+  background-color: var(--sjw-secondary-color);
+}
+
+.btn-primary {
+  color: white !important;
+  background-color: var(--sjw-secondary-color) !important;
+  border-color: var(--sjw-secondary-color);
+}
+
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:visited,
+.btn-primary:focus {
+  filter: brightness(1.1) !important;
+  border-color: var(--sjw-secondary-color);
+}
+
+/*footer styles*/
+.sticky-footer {
+  position: sticky;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.footer {
+  background-color: var(--sjw-dark-color) !important;
+  padding-right: 1rem;
+  color: var(--sjw-light-color);
+}
+
+footer .social > a {
+  color: var(--sjw-light-color);
+  opacity: 0.75;
+}
+
+footer .social > a:hover {
+  color: var(--sjw-secondary-color);
+  opacity: 0.9;
+}
+
+@media print {
+  .navbar, .footer, #btnSubmit {
+      display: none !important;
+  }
+  .container {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+  }
+  body {
+      padding: 0;
+      margin: 0;
+  }
+}
+
